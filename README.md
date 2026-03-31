@@ -37,3 +37,7 @@ A custom Millennium plugin that converts prices shown in EUR on Steam game pages
 
 - Exchange rates are fetched from `https://api.frankfurter.app`.
 - If the API is unavailable, conversion will not update until a valid rate is fetched.
+
+## Credits
+[Millennium](https://github.com/shdwmtr/millennium)
+
