@@ -1,0 +1,9 @@
+{
+  "$schema": "https://raw.githubusercontent.com/SteamClientHomebrew/Millennium/main/src/sys/plugin-schema.json",
+  "name": "eur-price-converter",
+  "common_name": "EUR Price Converter",
+  "description": "Converts EUR game prices to a selected currency on Steam game pages.",
+  "version": "0.1.0",
+  "frontend": "frontend",
+  "include": ["frontend", "backend", ".millennium"]
+}
