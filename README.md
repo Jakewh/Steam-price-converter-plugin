@@ -29,7 +29,7 @@ A custom Millennium plugin that converts prices shown in EUR on Steam game pages
 - Download the latest release of this plugin or from the Steambrew website
 - Place the plugin files in your Millennium plugins directory (should be a plugins folder in your Steam client directory)
 - Restart your Steam client
-- Enable the SteamDB plugin in the Millennium plugin menu
+- Enable plugin in the Millennium plugin menu
 - Right click steam on your taskbar and Click "Exit Steam" to make sure the plugin is fully loaded (no it does NOT automatically restart, that is a reload)
 - Startup steam
 
