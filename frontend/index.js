@@ -439,3 +439,4 @@ async function start() {
 void start().catch((error) => {
     console.warn("[EUR Price Converter] Startup failure:", error);
 });
+
