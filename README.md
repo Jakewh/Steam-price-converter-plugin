@@ -26,7 +26,7 @@ A custom Millennium plugin that converts prices shown in EUR on Steam game pages
 ## Install in Millennium
 
 - Ensure you have Millennium installed on your Steam client
-- Navigate to Eur Conveter from the plugins page
+- Navigate to EUR Price Converter from the plugins page
 - Click the "Copy Plugin ID" button
 - Back in Steam, go to Steam menu > Millenium > Plugins > Install a plugin and paste the code
 - Follow the remaining instructions to install and enable the plugin
