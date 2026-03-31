@@ -2,8 +2,6 @@
 
 A custom Millennium plugin that converts prices shown in EUR on Steam game pages to your selected currency.
 
-This implementation is original and only uses the linked SteamDB plugin as a reference for how Millennium plugins integrate with the client.
-
 ## Features
 
 - Converts EUR prices on Steam game pages (`/app/<id>`) to a selected currency.
@@ -12,23 +10,30 @@ This implementation is original and only uses the linked SteamDB plugin as a ref
 - Caches exchange rates locally for 6 hours.
 - Watches dynamic page updates and recalculates prices automatically.
 
-## Build
+| Title page |
+| --------- |
+| <img width="2872" height="1650" alt="Snímek obrazovky_20260331_075800" src="https://github.com/user-attachments/assets/0d96a30b-c186-4065-af4e-b768462688d0" />|
 
-1. Install dependencies:
-   `npm install`
-2. Build frontend output:
-   `npm run build`
+| Game page  |
+| --------- |
+|<img width="1272" height="1156" alt="Snímek obrazovky_20260331_075845" src="https://github.com/user-attachments/assets/b2170c34-9fff-4ff0-865d-ebda2cca6a26" />|
 
-The build outputs the runtime file into `frontend/index.js`.
+| Setup |
+| --------- |
+|<img width="571" height="599" alt="Snímek obrazovky_20260331_075823" src="https://github.com/user-attachments/assets/3f857caf-30b4-4b4b-bd70-fa39148fd197" />|
+
 
 ## Install in Millennium
 
-1. Build the plugin (`npm run build`).
-2. Copy this whole folder into your Millennium plugins directory.
-3. Restart Steam client and enable the plugin in Millennium settings.
+- Ensure you have Millennium installed on your Steam client
+- Download the latest release of this plugin or from the Steambrew website
+- Place the plugin files in your Millennium plugins directory (should be a plugins folder in your Steam client directory)
+- Restart your Steam client
+- Enable the SteamDB plugin in the Millennium plugin menu
+- Right click steam on your taskbar and Click "Exit Steam" to make sure the plugin is fully loaded (no it does NOT automatically restart, that is a reload)
+- Startup steam
 
 ## Notes
 
 - Exchange rates are fetched from `https://api.frankfurter.app`.
 - If the API is unavailable, conversion will not update until a valid rate is fetched.
-- A minimal `backend/main.py` is included because Millennium attempts to load a backend entrypoint for plugins.
