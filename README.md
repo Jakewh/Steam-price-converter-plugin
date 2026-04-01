@@ -26,17 +26,18 @@ A custom Millennium plugin that converts prices shown in EUR on Steam game pages
 ## Install in Millennium
 
 - Ensure you have Millennium installed on your Steam client
-- Download the latest release of this plugin or from the Steambrew website
-- Place the plugin files in your Millennium plugins directory (should be a plugins folder in your Steam client directory)
-- Restart your Steam client
-- Enable the SteamDB plugin in the Millennium plugin menu
-- Right click steam on your taskbar and Click "Exit Steam" to make sure the plugin is fully loaded (no it does NOT automatically restart, that is a reload)
-- Startup steam
+- Navigate to EUR Price Converter from the plugins page
+- Click the "Copy Plugin ID" button
+- Back in Steam, go to Steam menu > Millenium > Plugins > Install a plugin and paste the code
+- Follow the remaining instructions to install and enable the plugin
 
 ## Notes
 
 - Exchange rates are fetched from `https://api.frankfurter.app`.
 - If the API is unavailable, conversion will not update until a valid rate is fetched.
+
+## Known Issues
+- Millennium displays an error message in the logo indicating that a Python file cannot be found. This error does not interfere with or prevent the use of the program. It is merely a reference to a previous version and will be fixed in the future.
 
 ## Credits
 [Millennium](https://github.com/shdwmtr/millennium)
