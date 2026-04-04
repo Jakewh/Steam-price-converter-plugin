@@ -3,7 +3,7 @@
   "name": "eur-price-converter",
   "common_name": "EUR Price Converter",
   "description": "Converts EUR game prices to a selected currency on Steam game pages.",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "useBackend": true,
   "backendType": "lua",
   "frontend": "frontend",

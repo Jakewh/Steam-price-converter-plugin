@@ -159,7 +159,7 @@ function applyConversions(currency, rate) {
             continue;
         }
         const converted = convertText(original, currency, rate);
-        if (converted !== original) {
+        if (converted !== node.nodeValue) {
             node.nodeValue = converted;
         }
     }
@@ -184,8 +184,8 @@ async function fetchRate(currency) {
             // Ignore invalid cache and continue to network request.
         }
     }
-    const url = `https://api.frankfurter.app/latest?from=EUR&to=${encodeURIComponent(currency)}`;
-    const response = await fetch(url);
+    const url = `https://api.frankfurter.dev/v1/latest?from=EUR&to=${encodeURIComponent(currency)}`;
+    const response = await fetch(url, { redirect: "follow" });
     if (!response.ok) {
         throw new Error(`Rate request failed with status ${response.status}`);
     }
@@ -253,9 +253,13 @@ function createSettingsUi(onCurrencyChanged, initialCurrency) {
     panel.style.border = "1px solid rgba(255,255,255,0.16)";
     panel.style.borderRadius = "10px";
     panel.style.display = "flex";
-    panel.style.gap = "8px";
-    panel.style.alignItems = "center";
+    panel.style.flexDirection = "column";
+    panel.style.gap = "6px";
     panel.style.fontSize = "12px";
+    const row1 = document.createElement("div");
+    row1.style.display = "flex";
+    row1.style.gap = "8px";
+    row1.style.alignItems = "center";
     const label = document.createElement("label");
     label.textContent = "Convert to:";
     const select = document.createElement("select");
@@ -361,8 +365,19 @@ function createSettingsUi(onCurrencyChanged, initialCurrency) {
         onCurrencyChanged(selected);
         select.dataset.currentValue = selected;
     });
-    panel.append(label, select, customInput, customApplyButton);
+    row1.append(label, select, customInput, customApplyButton);
+    const statusEl = document.createElement("div");
+    statusEl.style.fontSize = "11px";
+    statusEl.style.opacity = "0.6";
+    statusEl.style.textAlign = "center";
+    statusEl.textContent = "načítám kurz...";
+    panel.append(row1, statusEl);
     (document.body ?? document.documentElement).append(panel);
+    return { setStatus: (text, isError) => {
+        statusEl.textContent = text;
+        statusEl.style.color = isError ? "#ff6b6b" : "#6bff9e";
+        statusEl.style.opacity = "1";
+    } };
 }
 function debounce(fn, delayMs) {
     let timer = null;
@@ -384,20 +399,32 @@ async function start() {
     }
     let settings = loadSettings();
     let rate = 1;
+    let isFetchingRate = false;
     let currentHref = window.location.href;
+    let uiControls = null;
     const convertCurrentPage = () => {
         applyConversions(settings.currency, rate);
     };
     const refreshRate = async () => {
+        isFetchingRate = true;
         try {
-            rate = await fetchRate(settings.currency);
-            convertCurrentPage();
+            const targetCurrency = settings.currency;
+            const fetchedRate = await fetchRate(targetCurrency);
+            if (targetCurrency === settings.currency) {
+                rate = fetchedRate;
+                uiControls?.setStatus(`1 EUR = ${rate.toFixed(2)} ${targetCurrency}`, false);
+            }
         }
         catch (error) {
-            console.warn("[EUR Price Converter] Failed to load exchange rate:", error);
+            console.error("[EUR Price Converter] Failed to load exchange rate:", error);
+            uiControls?.setStatus(`Chyba: ${error instanceof Error ? error.message : String(error)}`, true);
+        }
+        finally {
+            isFetchingRate = false;
+            convertCurrentPage();
         }
     };
-    createSettingsUi(async (currency) => {
+    uiControls = createSettingsUi(async (currency) => {
         settings = {
             currency,
             updatedAt: Date.now()
@@ -416,7 +443,9 @@ async function start() {
     }, settings.currency);
     await refreshRate();
     const runConversion = debounce(() => {
-        convertCurrentPage();
+        if (!isFetchingRate) {
+            convertCurrentPage();
+        }
     }, 250);
     const observer = new MutationObserver(() => {
         runConversion();
